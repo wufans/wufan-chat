@@ -86,3 +86,21 @@
 /app/topic/grouplist  群组列表
 /app/topic/chathistory 聊天框历史记录列表
 ```
+
+## 部署流程
+1. vue :
+```
+npm run serve
+```
+2. zookeeper
+```
+zkServer.cmd
+```
+3. server
+```
+port:8002
+```
+4. dubbo-admin
+```
+jave -jar dubbo-admin.jar
+```

@@ -26,6 +26,8 @@
 
 ![pic1](https://s2.ax1x.com/2019/10/16/KFcSd1.gif)
 
+![pic2](https://s2.ax1x.com/2019/10/16/KFc6m9.md.gif)
+
 
 ## 接口定义
 

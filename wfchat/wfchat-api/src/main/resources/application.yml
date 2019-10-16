@@ -1,0 +1,33 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: wfchat-provider
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/wfchat?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+#    url: jdbc:mysql://127.0.0.1:3306/wfchat?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+
+  cache:
+    type: redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: # mail address
+    password: # authority code
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+

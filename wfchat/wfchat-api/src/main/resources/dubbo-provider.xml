@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="wfchat-api"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:protocol name="dubbo"  port="20880" accesslog="true"/>
+
+
+    <dubbo:service interface="com.wufan.chat.wfchatcontract.TestService" ref="testService" protocol="dubbo" />
+    <dubbo:service interface="com.wufan.chat.wfchatcontract.serviceapi.UserService" ref="userService" protocol="dubbo" />
+    <dubbo:service interface="com.wufan.chat.wfchatcontract.serviceapi.FriendService" ref="friendService" protocol="dubbo" />
+    <dubbo:service interface="com.wufan.chat.wfchatcontract.serviceapi.ChatService" ref="chatService" protocol="dubbo" />
+    <dubbo:service interface="com.wufan.chat.wfchatcontract.serviceapi.GroupService" ref="groupService" protocol="dubbo" />
+    <dubbo:service interface="com.wufan.chat.wfchatcontract.serviceapi.RedisService" ref="redisService" protocol="dubbo" />
+
+    <bean id="testService" class="com.wufan.chat.wfchatservice.serviceimpl.TestServiceImpl"/>
+    <bean id="userService" class="com.wufan.chat.wfchatservice.serviceimpl.UserServiceImpl"/>
+    <bean id="friendService" class="com.wufan.chat.wfchatservice.serviceimpl.FriendServiceImpl"/>
+    <bean id="chatService" class="com.wufan.chat.wfchatservice.serviceimpl.ChatServiceImpl"/>
+    <bean id="groupService" class="com.wufan.chat.wfchatservice.serviceimpl.GroupServiceImpl"/>
+    <bean id="redisService" class="com.wufan.chat.wfchatservice.cache.RedisServiceImpl"/>
+
+
+
+
+
+
+</beans>

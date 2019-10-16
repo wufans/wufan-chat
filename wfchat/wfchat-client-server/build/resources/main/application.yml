@@ -1,0 +1,22 @@
+server:
+  port: 8002
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: wwychat-consumer
+#  output:
+#    ansi:
+#      enabled: always
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    date-format: yyyy-MM-dd HH:mm:ss
+  mvc:
+    dispatch-options-request: true

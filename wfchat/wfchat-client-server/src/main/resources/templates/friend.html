@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<script th:src="@{sockjs.min.js}"></script>
+<script th:src="@{stomp.min.js}"></script>
+<script th:src="@{jquery.js}"></script>
+<head>
+    <title>Hello world</title>
+</head>
+<body>
+<a href="/account/logout">注销</a>
+
+<br/>
+
+<div>账户：<span sec:authentication="name"></span></div>
+
+
+<br/><br/>
+<form id="unHandleAddFriend">
+    <input type="submit" value="显示好友申请请求"/>
+    <div>好友请求：</div>
+    <table id="unHandleFriendRequest">
+        <th>用户名</th>
+    </table>
+</form>
+
+<br/>
+<form id="confirmFriendRequest">
+    <input type="text" name="requestFriendName"/>
+    <input type="submit" value="接受" id="receptFriendRequest" onclick="receptFriendRequest();"/>
+    <input type="submit" value="忽略" id="ignoreFriendRequest" onclick="ignoreFriendRequest();"/>
+</form>
+
+<br/>
+<form id="chatForm">
+    <textarea rows="24" cols="100" id="chatBox" readonly="readonly"></textarea>
+    <br/>
+    请输入消息：<input type="text" name="message"/>
+    请输入好友名字：<input type="text" name="friendName"/>
+    <input type="submit" value="发送"/>
+</form>
+
+<br/>
+<form id="showFriend">
+    <input type="submit" value="显示好友列表"/>
+    <table id="friendList">
+        <th>用户名</th>
+    </table>
+</form>
+
+<br/>
+<form id="showNoFriend">
+    <input type="submit" value="显示非好友列表"/>
+    <table id="noFriendList">
+        <th>用户名</th>
+    </table>
+</form>
+
+<br/>
+<form id="addFriend">
+    <input type="text" name="username"/>
+    <input type="submit" value="添加好友"/>
+</form>
+
+
+<br/>
+<form id="historyMessageList">
+    好友名：<input type="text" name="friendname"/>
+    <input type="submit" value="聊天记录"/>
+    <table id="messageTable">
+        <tr>
+            <th>发送人</th>
+            <th>接受人</th>
+            <th>日期</th>
+            <th>信息</th>
+        </tr>
+        <tbody id="messageBody"></tbody>
+    </table>
+</form>
+
+<br/>
+<form id="recentMessage">
+    <input type="submit" value="最近会话"/>
+    <div id="recentName"></div>
+    <br/>
+    <table id="recentMessageTable">
+        <tr>
+            <th>发送人</th>
+            <th>接受人</th>
+            <th>日期</th>
+            <th>信息</th>
+        </tr>
+    </table>
+</form>
+
+
+<br/>
+<form id="offlineMessage">
+    <input type="submit" value="离线联系人"/>
+    <div id="offlineName"></div>
+</form>
+<br/>
+<form id="offlineMessageBox">
+    离线联系人：<input type="text" name="offlineChatName"/>
+    <input type="submit" value="离线联系消息"/>
+    <table id="offlineMessageTable">
+        <tr>
+            <th>发送人</th>
+            <th>接受人</th>
+            <th>日期</th>
+            <th>信息</th>
+        </tr>
+    </table>
+</form>
+
+
+</body>
+
+<script>
+
+    var sock = new SockJS("/socket");
+    var stomp = Stomp.over(sock);
+    stomp.connect('3', '3', function(frame) {
+        /**  订阅了/user/queue/notifications 发送的消息,这里与在控制器的 convertAndSendToUser 定义的地址保持一致, 
+         *  这里多用了一个/user,并且这个user 是必须的,使用user 才会发送消息到指定的用户。 
+         *  */
+        stomp.subscribe("/user/topic/receiveMessage", function (response) {
+            var data = JSON.parse(response.body);
+            var chatBox = document.getElementById("chatBox");
+            chatBox.value += "Time:"+ data.datetime + "  发送人：" + data.fromuserName + "\n" + data.message + "\n";
+
+            // stomp.send("/sendFriendRequest",{}, JSON.stringify({ 'name': data }));
+
+        });
+
+        stomp.subscribe("/user/topic/sendreqlist", function (response) {
+            var data = JSON.parse(response.body);
+            var table=document.getElementById("friendList");
+            var length = 0;
+            for(var temp in data){
+                length++;
+            }
+            /* <![CDATA[ */
+            for(var i=0;i<length;i++){
+                var row=table.insertRow(table.rows.length);
+                var c1=row.insertCell(0);
+                c1.innerHTML=data[i];
+            }
+            /* ]]> */
+        });
+
+        stomp.subscribe("/user/topic/noFriendList", function (response) {
+            var data = JSON.parse(response.body);
+            var table=document.getElementById("noFriendList");
+            var length = 0;
+            for(var temp in data){
+                length++;
+            }
+            /* <![CDATA[ */
+            for(var i=0;i<length;i++){
+                var row=table.insertRow(table.rows.length);
+                var c1=row.insertCell(0);
+                c1.innerHTML=data[i];
+            }
+            /* ]]> */
+        });
+
+        stomp.subscribe("/user/topic/handleAddFriend", function (response) {
+            var data = response.body;
+            if(data=='fail1'){
+                alert("不能添加自己为好友");
+                return;
+            }else if(data=='fail2'){
+                alert('此好友已存在');
+                return;
+            }else{
+                data = JSON.parse(data);
+                var table=document.getElementById("unHandleFriendRequest");
+                var length = 0;
+                for(var temp in data){
+                    length++;
+                }
+                /* <![CDATA[ */
+                for(var i=0;i<length;i++){
+                    var row=table.insertRow(table.rows.length);
+                    var c1=row.insertCell(0);
+                    c1.innerHTML=data[i];
+                }
+                /* ]]> */
+            }
+        });
+
+        stomp.subscribe("/user/topic/addFriendMessage", function (response) {
+            var data = response.body;
+            if(data=='fail'){
+                alert("添加好友失败");
+                return;
+            }else{
+                alert("已成功添加好友："+data);
+            }
+
+        });
+
+        stomp.subscribe("/user/topic/readFriendRequest", function (response) {
+            var data = JSON.parse(response.body);
+            var table=document.getElementById("unHandleFriendRequest");
+            var length = 0;
+            for(var temp in data){
+                length++;
+            }
+            /* <![CDATA[ */
+            for(var i=0;i<length;i++){
+                var row=table.insertRow(table.rows.length);
+                var c1=row.insertCell(0);
+                c1.innerHTML=data[i];
+            }
+            /* ]]> */
+        });
+
+        stomp.subscribe("/user/topic/historyMessageShow", function (response) {
+            $("#messageBody").html("");
+            var data = JSON.parse(response.body);
+            if(data=="fail"){
+                alert("fail");
+                return;
+            }
+            var table = document.getElementById("messageTable");
+            var length = 0;
+            for(var temp in data.list){
+                length++;
+            }
+            if(length==0){
+                alert("none history message!");
+                return;
+            }
+            /* <![CDATA[ */
+            for(var i=0;i<length;i++){
+                var row=table.insertRow(table.rows.length);
+                var c1=row.insertCell(0);
+                c1.innerHTML=data.list[i].fromuserName;
+                var c2=row.insertCell(1);
+                c2.innerHTML=data.list[i].touserName;
+                var c3=row.insertCell(2);
+                c3.innerHTML=data.list[i].datetime;
+                var c4=row.insertCell(3);
+                c4.innerHTML=data.list[i].message;
+            }
+            /* ]]> */
+        });
+
+        stomp.subscribe("/user/topic/showRecentChat", function (response) {
+            var data = JSON.parse(response.body);
+            if(data.code==1){
+                alert("无最近联系人");
+                return;
+            }else{
+                $('#recentName').append("<b>最近联系人: " + data.detail + "</b><br/>");
+                var table = document.getElementById("recentMessageTable");
+                var length = 0;
+                for(var temp in data.data){
+                    length++;
+                }
+                /* <![CDATA[ */
+                for(var i=0;i<length;i++){
+                    var row=table.insertRow(table.rows.length);
+                    var c1=row.insertCell(0);
+                    c1.innerHTML=data.data.list[i].fromuserName;
+                    var c2=row.insertCell(1);
+                    c2.innerHTML=data.data.list[i].touserName;
+                    var c3=row.insertCell(2);
+                    c3.innerHTML=data.data.list[i].datetime;
+                    var c4=row.insertCell(3);
+                    c4.innerHTML=data.data.list[i].message;
+                }
+                /* ]]> */
+            }
+        });
+
+        stomp.subscribe("/user/topic/showOfflineChat", function (response) {
+            var data = JSON.parse(response.body);
+            for(var temp in data){
+                $('#offlineName').append("<b>"+ temp + ":" +data[temp] + "</b><br/>")
+            }
+        });
+
+        stomp.subscribe("/user/topic/showOfflineMessage", function (response) {
+            if(response.body=='fail'){
+                alert("none offline message!");
+                return;
+            }
+            var data = JSON.parse(response.body);
+            var table = document.getElementById("offlineMessageTable");
+            var length = 0;
+            for(var temp in data){
+                length++;
+            }
+            if(length==0){
+                alert("none offline message!");
+                return;
+            }
+            /* <![CDATA[ */
+            for(var i=0;i<length;i++){
+                var row=table.insertRow(table.rows.length);
+                var c1=row.insertCell(0);
+                c1.innerHTML=data[i].fromuserName;
+                var c2=row.insertCell(1);
+                c2.innerHTML=data[i].touserName;
+                var c3=row.insertCell(2);
+                c3.innerHTML=data[i].datetime;
+                var c4=row.insertCell(3);
+                c4.innerHTML=data[i].message;
+            }
+            /* ]]> */
+
+        });
+
+        stomp.subscribe("/user/topic/friendLogin", function (response) {
+            alert('好友：'+ response.body + '上线了');
+        });
+
+        stomp.subscribe("/user/topic/friendLogout", function (response) {
+            alert('好友：'+ response.body + '下线了');
+        });
+
+    });
+
+    $('#chatForm').submit(function(e){
+        e.preventDefault();
+        var message = $('#chatForm').find('input[name="message"]').val();
+        var friendName = $('#chatForm').find('input[name="friendName"]').val();
+        if(message=='' || friendName==''){
+            alert("接收人与内容不能为空");
+            return;
+        }
+        var date = CurentTime();
+        var chatBox = document.getElementById("chatBox");
+        chatBox.value += "Time:"+ date + "  我发送给：" + friendName + "\n" + message + "\n";
+
+        stomp.send("/sendMessage",{},JSON.stringify({'friendName':friendName, 'message':message, 'datetime':date}));
+    });
+
+    $('#showFriend').submit(function (e) {
+        e.preventDefault();
+        stomp.send("/listAllFriend",{},{});
+    });
+
+    $('#showNoFriend').submit(function (e) {
+        e.preventDefault();
+        stomp.send("/listAllNoFriend",{},{});
+    });
+
+    $('#addFriend').submit(function (e) {
+        e.preventDefault();
+        var text = $('#addFriend').find('input[name="username"]').val();
+        stomp.send("/sendFriendRequest",{}, JSON.stringify({ 'name': text }));
+    });
+
+    $('#unHandleAddFriend').submit(function (e) {
+        e.preventDefault();
+        stomp.send("/readFriendRequest",{},{});
+    });
+
+    $('#receptFriendRequest').click(function (e) {
+        e.preventDefault();
+        var text = $('#confirmFriendRequest').find('input[name="requestFriendName"]').val();
+        stomp.send("/receptFriendRequest",{},JSON.stringify({ 'name': text }));
+    });
+
+    $('#ignoreFriendRequest').click(function (e) {
+        e.preventDefault();
+        var text = $('#confirmFriendRequest').find('input[name="requestFriendName"]').val();
+        stomp.send("/ignoreFriendRequest",{},JSON.stringify({ 'name': text }));
+    });
+
+
+    $('#historyMessageList').submit(function(e){
+        e.preventDefault();
+        var text = $('#historyMessageList').find('input[name="friendname"]').val();
+        if(text==''){
+            alert('好友名不能为空！');
+            return;
+        }
+        stomp.send("/seekHistoryMessage",{},JSON.stringify({ 'name': text }));
+    });
+
+    $('#recentMessage').submit(function (e) {
+        e.preventDefault();
+        stomp.send("/recentChat",{},{});
+    });
+
+    $('#offlineMessage').submit(function (e) {
+        e.preventDefault();
+        stomp.send("/offlineMessage",{},{});
+    });
+
+    $('#offlineMessageBox').submit(function (e) {
+        e.preventDefault();
+        var text = $('#offlineMessageBox').find('input[name="offlineChatName"]').val();
+        if(text==''){
+            alert('好友名不能为空！');
+            return;
+        }
+        stomp.send("/requestOfflineMessage",{},JSON.stringify({ 'name': text }));
+    });
+
+    /* <![CDATA[ */
+    function CurentTime()
+    {
+        var now = new Date();
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var hh = now.getHours();            //时
+        var mm = now.getMinutes();          //分
+        var ss = now.getSeconds();           //秒
+        var clock = year + "-";
+        if(month < 10) clock += "0";
+        clock += month + "-";
+
+        if(day < 10) clock += "0";
+        clock += day + " ";
+
+        if(hh < 10) clock += "0";
+        clock += hh + ":";
+
+        if (mm < 10) clock += '0';
+        clock += mm + ":";
+
+        if (ss < 10) clock += '0';
+        clock += ss;
+
+        return(clock);
+    }
+    /* ]]> */
+
+</script>
+</html>

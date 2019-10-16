@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="wwychat-test-client"/>
+    <dubbo:registry address="zookeeper://localhost:2181"/>
+    <dubbo:reference id="testService" interface="com.pdd.chat.wwychatcontract.TestService"/>
+    <dubbo:reference id="userService" interface="com.pdd.chat.wwychatcontract.serviceapi.UserService"/>
+    <dubbo:reference id="friendService" interface="com.pdd.chat.wwychatcontract.serviceapi.FriendService"/>
+    <dubbo:reference id="chatService" interface="com.pdd.chat.wwychatcontract.serviceapi.ChatService"/>
+    <dubbo:reference id="groupService" interface="com.pdd.chat.wwychatcontract.serviceapi.GroupService"/>
+    <dubbo:reference id="redisService" interface="com.pdd.chat.wwychatcontract.serviceapi.RedisService"/>
+
+
+</beans>

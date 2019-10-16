@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: serverservice-impl
+  dubbo:
+    server: true
+    application:
+      name: serverservice-impl
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    protocol:
+      name: dubbo
+      port: 20880
+    scan:
+      basePackages: com.wufan.chat.wfchatservice.serviceimpl

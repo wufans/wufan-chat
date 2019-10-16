@@ -1,0 +1,49 @@
+2019-07-23 18:52:30.380  INFO 11916 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2019-07-23 18:52:30.613  INFO 11916 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2539 ms
+2019-07-23 18:52:31.781  INFO 11916 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2019-07-23 18:52:31.955  INFO 11916 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-07-23 18:52:32.078  INFO 11916 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [public/index.html]
+2019-07-23 18:52:32.227  INFO 11916 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2019-07-23 18:52:32.276  INFO 11916 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2019-07-23 18:52:32.396  INFO 11916 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2019-07-23 18:52:32.708  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: disableRouteUsingPUT_1
+2019-07-23 18:52:32.711  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: enableRouteUsingPUT_1
+2019-07-23 18:52:32.760  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: searchServiceUsingGET_1
+2019-07-23 18:52:32.820  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: createRuleUsingPOST_1
+2019-07-23 18:52:32.822  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteRouteUsingDELETE_1
+2019-07-23 18:52:32.827  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailRouteUsingGET_1
+2019-07-23 18:52:32.829  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: disableRouteUsingPUT_2
+2019-07-23 18:52:32.832  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: enableRouteUsingPUT_2
+2019-07-23 18:52:32.834  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: searchRoutesUsingGET_1
+2019-07-23 18:52:32.836  INFO 11916 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateRuleUsingPUT_1
+2019-07-23 18:52:32.900  INFO 11916 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2019-07-23 18:53:57.347  INFO 11916 --- [http-nio-8081-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-07-23 18:53:57.355  INFO 11916 --- [http-nio-8081-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2019-07-23 19:24:29.625  WARN 11916 --- [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn          : Client session timed out, have not heard from server in 198348ms for sessionid 0x1000002af5f0003
+2019-07-23 19:24:30.824  WARN 11916 --- [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn          : Unable to reconnect to ZooKeeper service, session 0x1000002af5f0003 has expired
+2019-07-23 19:24:30.825  WARN 11916 --- [main-EventThread] org.apache.curator.ConnectionState       : Session expired event received
+2019-07-23 19:24:31.077  WARN 11916 --- [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn          : Unable to reconnect to ZooKeeper service, session 0x1000002af5f0002 has expired
+2019-07-23 19:24:31.077  WARN 11916 --- [main-EventThread] org.apache.curator.ConnectionState       : Session expired event received
+2019-07-23 19:24:31.278  WARN 11916 --- [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn          : Unable to reconnect to ZooKeeper service, session 0x1000002af5f0004 has expired
+2019-07-23 19:24:31.278  WARN 11916 --- [main-EventThread] org.apache.curator.ConnectionState       : Session expired event received
+2019-07-23 19:55:53.474  INFO 15496 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2019-07-23 19:55:53.658  INFO 15496 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2156 ms
+2019-07-23 19:55:54.661  INFO 15496 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2019-07-23 19:55:54.809  INFO 15496 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-07-23 19:55:54.909  INFO 15496 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [public/index.html]
+2019-07-23 19:55:55.033  INFO 15496 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2019-07-23 19:55:55.096  INFO 15496 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2019-07-23 19:55:55.164  INFO 15496 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2019-07-23 19:55:55.404  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: disableRouteUsingPUT_1
+2019-07-23 19:55:55.408  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: enableRouteUsingPUT_1
+2019-07-23 19:55:55.452  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: searchServiceUsingGET_1
+2019-07-23 19:55:55.508  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: createRuleUsingPOST_1
+2019-07-23 19:55:55.508  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteRouteUsingDELETE_1
+2019-07-23 19:55:55.512  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailRouteUsingGET_1
+2019-07-23 19:55:55.516  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: disableRouteUsingPUT_2
+2019-07-23 19:55:55.516  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: enableRouteUsingPUT_2
+2019-07-23 19:55:55.520  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: searchRoutesUsingGET_1
+2019-07-23 19:55:55.520  INFO 15496 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateRuleUsingPUT_1
+2019-07-23 19:55:55.564  INFO 15496 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2019-07-23 19:56:01.279  INFO 15496 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-07-23 19:56:01.286  INFO 15496 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms

@@ -8,6 +8,7 @@
 
 后端服务实现基于以下技术：
 
+
 - 使用 Java + Spring Boot + Mybatis开发，采用 Zookeeper + Dubbo RPC 微服务架构，基于gradle构建
 - 基于 Spring Security 实现 SSO 登录方案
 - 前后端联合使用WebSocket 和Http协议进行通信，接口设计遵循 Restful 规范

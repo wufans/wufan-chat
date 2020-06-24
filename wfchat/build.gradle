@@ -61,7 +61,9 @@ subprojects {
 
 //        compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
 //        compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '1.5.8.RELEASE'
-        compile group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.10'
+        compile (group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.10'){
+            exclude module: 'slf4j-log4j12'
+        }
         compile(group: 'com.101tec', name: 'zkclient', version: '0.10'){
 //            exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
             exclude group:'org.slf4j', module:'log4j-over-slf4j'
